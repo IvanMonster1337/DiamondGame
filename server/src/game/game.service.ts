@@ -54,10 +54,6 @@ export class GameService {
 
     if (cell.value === 'D') {
       game.diamondsLeft--;
-      if (game.diamondsLeft === 0) {
-        game.winner = side;
-        game.state = GameState.FINISHED;
-      }
 
       if (side === Side.HOST) {
         game.host.score++;
@@ -65,6 +61,12 @@ export class GameService {
 
       if (side === Side.GUEST) {
         game.guest.score++;
+      }
+
+      if (game.diamondsLeft === 0) {
+        game.winner =
+          game.host.score > game.guest.score ? Side.HOST : Side.GUEST;
+        game.state = GameState.FINISHED;
       }
     } else {
       game.currentPlayer = side === Side.HOST ? Side.GUEST : Side.HOST;
