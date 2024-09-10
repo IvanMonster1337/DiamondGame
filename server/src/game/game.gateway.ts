@@ -112,6 +112,7 @@ export class GameGateway implements OnGatewayConnection {
         state: game.state,
         hostScore: game.host.score,
         guestScore: game.guest.score,
+        diamondsLeft: game.diamondsLeft,
         currentPlayer: game.currentPlayer,
       });
     }
@@ -164,9 +165,10 @@ export class GameGateway implements OnGatewayConnection {
 
     if (updatedGame.state === GameState.FINISHED) {
       this.server.to(gameId).emit('gameFinished', {
-        grid: this.gridService.getHiddenGrid(updatedGame.grid),
+        grid: this.gridService.getExposedGrid(updatedGame.grid),
         hostScore: updatedGame.host.score,
         guestScore: updatedGame.guest.score,
+        diamondsLeft: game.diamondsLeft,
         winner: updatedGame.winner,
       });
       return;
@@ -177,6 +179,7 @@ export class GameGateway implements OnGatewayConnection {
       state: updatedGame.state,
       hostScore: updatedGame.host.score,
       guestScore: updatedGame.guest.score,
+      diamondsLeft: game.diamondsLeft,
       currentPlayer: updatedGame.currentPlayer,
     });
   }

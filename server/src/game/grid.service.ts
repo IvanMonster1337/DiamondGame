@@ -28,6 +28,24 @@ export class GridService {
     return newGrid;
   }
 
+  /**
+   * Creates a new grid where all cells are exposed.
+   *
+   * @param grid the grid to expose
+   * @returns the new exposed grid
+   */
+  getExposedGrid(
+    grid: Grid,
+  ): Array<Array<Cell | { value: ''; exposed: boolean }>> {
+    const newGrid = grid.map((row) =>
+      row.map((cell) => {
+        return { value: cell.value, exposed: true };
+      }),
+    );
+
+    return newGrid;
+  }
+
   createGrid(dimension: number, diamondCount: number): Grid {
     const grid = new Array(dimension);
     for (let i = 0; i < dimension; i++) {
