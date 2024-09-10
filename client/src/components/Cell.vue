@@ -2,10 +2,9 @@
 import { computed } from 'vue'
 import { socket, store } from '@/socket/socket'
 import { GameState } from '@/common/types/game'
-const DIAMOND = 'D'
-const props = defineProps<{
-  value: 'D' | number | ''
-  exposed: boolean
+import { DIAMOND } from '@/common/constants';
+import type { Cell } from '@/common/types/cell';
+const props = defineProps<Cell &{
   x: number
   y: number
 }>()
