@@ -1,10 +1,12 @@
 import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
-import { CreateFieldDto } from './dto/create-field.dto';
+import { CreateGameDto } from './dto/create-game.dto';
 import { GridService } from './grid.service';
 import { GameService } from './game.service';
 import { Game, GameState, Side } from '../common/types/game';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('game')
+@ApiTags('games')
+@Controller('games')
 export class GameController {
   constructor(
     private readonly gridService: GridService,
@@ -12,7 +14,7 @@ export class GameController {
   ) {}
 
   @Post()
-  async createField(@Body() createFieldDto: CreateFieldDto) {
+  async createField(@Body() createFieldDto: CreateGameDto) {
     const { dimension, diamondCount, clientId } = createFieldDto;
     if (diamondCount > dimension * dimension) {
       throw new BadRequestException('Diamond count is bigger than field size');

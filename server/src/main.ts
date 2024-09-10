@@ -9,7 +9,6 @@ async function bootstrap() {
     .setTitle('Diamond game')
     .setDescription('The diamond API description')
     .setVersion('1.0')
-    .addTag('diamond')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
