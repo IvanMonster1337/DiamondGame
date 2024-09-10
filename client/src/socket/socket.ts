@@ -10,6 +10,7 @@ type GameStore = {
   gameState: GameState | null
   currentPlayer: Side | ''
   winner: Side | ''
+  diamondsLeft: number | null
   joinError: string
   grid: Grid | null
   hostScore: string
@@ -28,6 +29,7 @@ export const store: GameStore = reactive({
   side: '',
   winner: '',
   currentPlayer: '',
+  diamondsLeft: null,
   joinError: '',
   grid: null,
   hostScore: '',
@@ -55,6 +57,7 @@ export const store: GameStore = reactive({
     this.hostScore = ''
     this.guestScore = ''
     this.winner = ''
+    this.diamondsLeft = null
   }
 })
 
@@ -69,7 +72,16 @@ socket.on('connected', (msg) => {
 })
 
 socket.on('gameStarted', (msg) => {
-  const { grid, id, currentPlayer, state, hostScore, guestScore } = msg
+  const {
+    grid,
+    id,
+    currentPlayer,
+    state,
+    hostScore,
+    guestScore,
+    diamondsLeft
+  } = msg
+  store.diamondsLeft = diamondsLeft
   store.grid = grid
   store.gameState = state
   store.currentPlayer = currentPlayer
@@ -79,7 +91,9 @@ socket.on('gameStarted', (msg) => {
 })
 
 socket.on('gameUpdated', (msg) => {
-  const { grid, currentPlayer, state, hostScore, guestScore } = msg
+  const { grid, currentPlayer, state, hostScore, guestScore, diamondsLeft } =
+    msg
+  store.diamondsLeft = diamondsLeft
   store.grid = grid
   store.gameState = state
   store.currentPlayer = currentPlayer
@@ -88,12 +102,13 @@ socket.on('gameUpdated', (msg) => {
 })
 
 socket.on('gameFinished', (msg) => {
-  const { grid, winner, state, hostScore, guestScore } = msg
+  const { grid, winner, diamondsLeft, hostScore, guestScore } = msg
   store.grid = grid
   store.gameState = GameState.FINISHED
   store.winner = winner
   store.hostScore = hostScore
   store.guestScore = guestScore
+  store.diamondsLeft = diamondsLeft
 })
 
 socket.on('disconnect', () => {

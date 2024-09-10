@@ -26,6 +26,9 @@ import Cell from './Cell.vue'
         {{ store.side === Side.HOST ? store.hostScore : store.guestScore }}
       </h1>
       <h1>
+        Diamonds left: {{ store.diamondsLeft }}
+      </h1>
+      <h1>
         Opponent score:
         {{ store.side === Side.HOST ? store.guestScore : store.hostScore }}
       </h1>
