@@ -57,7 +57,7 @@ const createGameSchema = ref({
           form$.submitting = true
 
           const response = await form$.$vueform.services.axios
-            .post('/game', {
+            .post('/games', {
               dimension: parseInt(dimension, 10),
               diamondCount: parseInt(diamondCount, 10),
               clientId: store.clientId

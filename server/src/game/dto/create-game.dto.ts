@@ -2,7 +2,7 @@ import { IsInt, IsUUID, Max, Min } from 'class-validator';
 import { IsOdd } from 'src/common/validation/IsOdd';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateFieldDto {
+export class CreateGameDto {
   @ApiProperty({ description: 'Client ID' })
   @IsUUID()
   clientId: string;
